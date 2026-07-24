@@ -1,0 +1,28 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-background text-on-background font-body-md selection:bg-primary selection:text-on-primary;
+  }
+}
+
+@layer utilities {
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .metallic-glow {
+    box-shadow: 0 0 20px rgba(242, 202, 80, 0.15);
+  }
+  
+  .hero-clip {
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+  }
+  
+  @media (max-width: 768px) {
+    .hero-clip { clip-path: none; }
+  }
+}
