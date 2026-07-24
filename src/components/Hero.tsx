@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
@@ -25,9 +25,9 @@ export default function Hero() {
             Elevate your property's security and aesthetic with NJ's premier architectural Aluminum, metal and PVC solutions. Built for durability, designed for prestige.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="bg-primary text-on-primary px-10 py-5 rounded-none font-label-bold text-label-bold uppercase tracking-widest metallic-glow hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-3">
+            <Link to="/contact" className="bg-primary text-on-primary px-10 py-5 rounded-none font-label-bold text-label-bold uppercase tracking-widest metallic-glow hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-3">
               Get a Free ESTIMATE<span className="material-symbols-outlined">arrow_forward</span>
-            </button>
+            </Link>
             <div className="flex flex-col justify-center">
               <div className="flex text-primary">
                 {[1, 2, 3, 4, 5].map((i) => (
