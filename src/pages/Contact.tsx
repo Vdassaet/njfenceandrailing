@@ -43,20 +43,25 @@ export default function Contact() {
             </div>
           </div>
 
-          <form className="space-y-6 flex flex-col justify-center">
+          <form action="https://formsubmit.co/njfenceandrailing@gmail.com" method="POST" className="space-y-6 flex flex-col justify-center">
+            {/* Hidden fields for FormSubmit configuration */}
+            <input type="hidden" name="_subject" value="New Contact Request from Website!" />
+            <input type="hidden" name="_next" value="https://njfenceandrailing.vercel.app/" />
+            <input type="hidden" name="_captcha" value="false" />
+            
             <div>
               <label className="block text-label-bold text-on-surface-variant uppercase mb-2">Name</label>
-              <input type="text" className="w-full bg-background border border-outline-variant p-3 text-on-surface focus:border-primary focus:outline-none transition-colors" placeholder="Your Name" />
+              <input type="text" name="name" required className="w-full bg-background border border-outline-variant p-3 text-on-surface focus:border-primary focus:outline-none transition-colors" placeholder="Your Name" />
             </div>
             <div>
               <label className="block text-label-bold text-on-surface-variant uppercase mb-2">Email</label>
-              <input type="email" className="w-full bg-background border border-outline-variant p-3 text-on-surface focus:border-primary focus:outline-none transition-colors" placeholder="Your Email Address" />
+              <input type="email" name="email" required className="w-full bg-background border border-outline-variant p-3 text-on-surface focus:border-primary focus:outline-none transition-colors" placeholder="Your Email Address" />
             </div>
             <div>
               <label className="block text-label-bold text-on-surface-variant uppercase mb-2">Message</label>
-              <textarea rows={4} className="w-full bg-background border border-outline-variant p-3 text-on-surface focus:border-primary focus:outline-none transition-colors" placeholder="How can we help you?"></textarea>
+              <textarea name="message" required rows={4} className="w-full bg-background border border-outline-variant p-3 text-on-surface focus:border-primary focus:outline-none transition-colors" placeholder="How can we help you?"></textarea>
             </div>
-            <button type="button" className="bg-primary text-on-primary px-8 py-4 rounded-none font-label-bold text-label-bold uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all w-full md:w-auto">
+            <button type="submit" className="bg-primary text-on-primary px-8 py-4 rounded-none font-label-bold text-label-bold uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all w-full md:w-auto">
               Send Message
             </button>
           </form>
