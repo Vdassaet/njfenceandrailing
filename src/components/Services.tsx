@@ -37,7 +37,7 @@ export default function Services() {
               <img 
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                 alt="Close-up of a sleek, black powder-coated aluminum railing" 
-                src="/images/railings/40646ee3c7014d3aadbc52ecf5396f4a.jpg" 
+                src="/images/Metal railings/40646ee3c7014d3aadbc52ecf5396f4a.jpg" 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -52,7 +52,7 @@ export default function Services() {
               <img 
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                 alt="Professional installation of a metal fence panel" 
-                src="/images/railings/26e49a78162ad2ce3b327ab6cd52b6c1.jpg" 
+                src="/images/Metal railings/26e49a78162ad2ce3b327ab6cd52b6c1.jpg" 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -67,7 +67,7 @@ export default function Services() {
               <img 
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                 alt="A pristine white PVC railing system" 
-                src="/images/railings/8da22e38a8120cc4712036bf68fb7d99.jpg" 
+                src="/images/pvc railing/pvc1.png" 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -97,7 +97,7 @@ export default function Services() {
                 <img 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                   alt="A modern horizontal slat aluminum fence in dark charcoal" 
-                  src="/images/fences/3563098f17672a7672e7426712fe5b25.jpg" 
+                  src="/images/vinyl fence/3563098f17672a7672e7426712fe5b25.jpg" 
                 />
               </div>
               <div className="p-8">
@@ -114,7 +114,7 @@ export default function Services() {
                 <img 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                   alt="A long stretch of high-quality white PVC privacy fencing" 
-                  src="/images/fences/762babe79f4ad360ab86b27a930dc4a5.jpg" 
+                  src="/images/aluminum fences/762babe79f4ad360ab86b27a930dc4a5.jpg" 
                 />
               </div>
               <div className="p-8">
