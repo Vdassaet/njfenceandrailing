@@ -14,11 +14,16 @@ export default function Footer() {
             Providing top-tier fencing and railing solutions for the most demanding residential and commercial projects across New Jersey.
           </p>
           <div className="flex gap-4">
-            <a className="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors" href="#">
-              <span className="material-symbols-outlined text-[20px]">share</span>
-            </a>
-            <a className="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors" href="#">
-              <span className="material-symbols-outlined text-[20px]">thumb_up</span>
+            <a 
+              className="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors text-on-surface-variant" 
+              href="https://www.facebook.com/people/NJ-Fence-Railings/61593430837806/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Follow us on Facebook"
+            >
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5.01 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02Z"/>
+              </svg>
             </a>
           </div>
         </div>
