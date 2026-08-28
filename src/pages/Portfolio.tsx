@@ -83,6 +83,7 @@ const weldingAlbums: Album[] = [
     title: "Mobile Welding Repair",
     description: "On-site professional welding and repair services to restore the structural integrity of your metalwork.",
     images: [
+      '/videos/mobile_welding.mp4',
       '/images/mobile welding repair/9819a169669b5905c58a35991c57e9f6.webp',
       '/images/mobile welding repair/aeee0835dbad26f1b3e1eadf852374ba.jpg'
     ]
@@ -149,17 +150,28 @@ export default function Portfolio() {
               
               {/* Gallery Grid for this Album */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {album.images.map((img, imgIndex) => (
-                  <div key={imgIndex} className="group relative aspect-square bg-surface-container-high overflow-hidden border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
-                    <img 
-                      src={img} 
-                      alt={`${album.title} portfolio item ${imgIndex + 1}`}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-background/0 group-hover:bg-background/20 transition-colors duration-300"></div>
-                  </div>
-                ))}
+                {album.images.map((img, imgIndex) => {
+                  const isVideo = img.endsWith('.mp4');
+                  return (
+                    <div key={imgIndex} className="group relative aspect-square bg-surface-container-high overflow-hidden border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                      {isVideo ? (
+                        <video 
+                          src={img} 
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          autoPlay muted loop playsInline
+                        />
+                      ) : (
+                        <img 
+                          src={img} 
+                          alt={`${album.title} portfolio item ${imgIndex + 1}`}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          loading="lazy"
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-background/0 group-hover:bg-background/20 transition-colors duration-300"></div>
+                    </div>
+                  );
+                })}
               </div>
             </section>
           ))}

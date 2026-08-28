@@ -159,17 +159,24 @@ export default function Services() {
           </div>
           <div className="grid md:grid-cols-1 gap-8">
             <div className="bg-surface-container-high border border-outline-variant overflow-hidden group flex flex-col md:flex-row">
-              <div className="md:w-1/2 grid grid-cols-2 gap-1 overflow-hidden">
-                <img 
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" 
-                  alt="Mobile Welding Repair Project 1" 
-                  src="/images/mobile welding repair/9819a169669b5905c58a35991c57e9f6.webp" 
+              <div className="md:w-1/2 flex flex-col gap-1 overflow-hidden">
+                <video 
+                  className="w-full h-48 object-cover md:h-64 transition-transform duration-700 hover:scale-105" 
+                  autoPlay muted loop playsInline
+                  src="/videos/mobile_welding.mp4" 
                 />
-                <img 
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" 
-                  alt="Mobile Welding Repair Project 2" 
-                  src="/images/mobile welding repair/aeee0835dbad26f1b3e1eadf852374ba.jpg" 
-                />
+                <div className="grid grid-cols-2 gap-1 h-32 md:h-48">
+                  <img 
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" 
+                    alt="Mobile Welding Repair Project 1" 
+                    src="/images/mobile welding repair/9819a169669b5905c58a35991c57e9f6.webp" 
+                  />
+                  <img 
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" 
+                    alt="Mobile Welding Repair Project 2" 
+                    src="/images/mobile welding repair/aeee0835dbad26f1b3e1eadf852374ba.jpg" 
+                  />
+                </div>
               </div>
               <div className="p-8 md:w-1/2 flex flex-col justify-center">
                 <h3 className="text-headline-md font-headline-md text-primary uppercase mb-2">Emergency & Scheduled Repairs</h3>
