@@ -64,6 +64,8 @@ const railingsAlbums: Album[] = [
     title: "Metal Railings",
     description: "Custom wrought iron and metal railings crafted for exceptional strength and timeless design.",
     images: [
+      '/images/Metal railings/13.jpg',
+      '/images/Metal railings/14.jpg',
       '/images/Metal railings/029f84754d0610355a1da3d198d27c8d.jpg',
       '/images/Metal railings/26e49a78162ad2ce3b327ab6cd52b6c1.jpg',
       '/images/Metal railings/4053ca8d5727e6a282deed2c4fb77d6b.jpg',
