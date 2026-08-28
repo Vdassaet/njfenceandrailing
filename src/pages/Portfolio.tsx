@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 type Album = {
@@ -101,93 +101,251 @@ const weldingAlbums: Album[] = [
   }
 ];
 
+type Category = 'All' | 'Fences' | 'Railings' | 'Welding & Repair';
+
+type ProjectItem = {
+  id: string;
+  url: string;
+  isVideo: boolean;
+  title: string;
+  category: Category;
+  description: string;
+};
+
+// Flatten all data into a single array of items
+const allProjects: ProjectItem[] = [];
+let idCounter = 0;
+
+const processAlbums = (albums: Album[], categoryName: Category) => {
+  albums.forEach(album => {
+    album.images.forEach(img => {
+      allProjects.push({
+        id: `proj-${idCounter++}`,
+        url: img,
+        isVideo: img.endsWith('.mp4'),
+        title: album.title,
+        category: categoryName,
+        description: album.description
+      });
+    });
+  });
+};
+
+processAlbums(fencesAlbums, 'Fences');
+processAlbums(railingsAlbums, 'Railings');
+processAlbums(weldingAlbums, 'Welding & Repair');
+
+// We need a RevealCard component for the scroll animation
+const RevealCard = memo(({ item, onClick, index }: { item: ProjectItem, onClick: () => void, index: number }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.1, rootMargin: '50px' });
+    
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Using a staggered delay based on index for a cascading effect when mounting
+  const delay = (index % 12) * 50;
+
+  return (
+    <div 
+      ref={ref}
+      onClick={onClick}
+      className={`group cursor-pointer relative aspect-square bg-surface-container-high overflow-hidden rounded-xl border border-outline-variant/30 shadow-sm hover:shadow-lg transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {item.isVideo ? (
+        <video src={item.url} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-[1.04]" autoPlay muted loop playsInline />
+      ) : (
+        <img src={item.url} alt={item.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-[1.04]" loading="lazy" />
+      )}
+      
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]"></div>
+      
+      {/* Content */}
+      <div className="absolute inset-0 p-6 flex flex-col justify-end opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]">
+        <span className="text-white/80 font-label-bold text-xs uppercase tracking-[0.2em] mb-2">{item.category}</span>
+        <h3 className="text-white font-headline-sm mb-4 leading-tight">{item.title}</h3>
+        <div className="flex items-center gap-2 text-white font-label-bold text-sm uppercase tracking-widest mt-auto">
+          <span className="material-symbols-outlined text-[18px]">visibility</span>
+          View Gallery
+        </div>
+      </div>
+    </div>
+  );
+});
+RevealCard.displayName = 'RevealCard';
+
+// Lightbox Component
+const Lightbox = ({ 
+  items, 
+  initialIndex, 
+  onClose 
+}: { 
+  items: ProjectItem[], 
+  initialIndex: number, 
+  onClose: () => void 
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [touchStart, setTouchStart] = useState(0);
+
+  const item = items[currentIndex];
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex(prev => (prev + 1) % items.length);
+  }, [items.length]);
+
+  const handlePrev = useCallback(() => {
+    setCurrentIndex(prev => (prev - 1 + items.length) % items.length);
+  }, [items.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') handleNext();
+      if (e.key === 'ArrowLeft') handlePrev();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [onClose, handleNext, handlePrev]);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md animate-in fade-in duration-300">
+      {/* Header */}
+      <div className="absolute top-0 left-0 right-0 p-4 md:p-8 flex justify-between items-center z-20">
+        <div className="text-white">
+          <p className="text-sm font-label-bold uppercase tracking-[0.2em] opacity-70">{currentIndex + 1} / {items.length}</p>
+        </div>
+        <button onClick={onClose} className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors">
+          <span className="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      {/* Nav */}
+      <button onClick={handlePrev} className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-20 hidden sm:flex">
+        <span className="material-symbols-outlined text-[28px]">chevron_left</span>
+      </button>
+      <button onClick={handleNext} className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-20 hidden sm:flex">
+        <span className="material-symbols-outlined text-[28px]">chevron_right</span>
+      </button>
+
+      {/* Content */}
+      <div 
+        className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-12 md:p-24"
+        onTouchStart={e => setTouchStart(e.touches[0].clientX)}
+        onTouchEnd={e => {
+          const touchEnd = e.changedTouches[0].clientX;
+          if (touchStart - touchEnd > 50) handleNext();
+          if (touchEnd - touchStart > 50) handlePrev();
+        }}
+      >
+        <div className="relative w-full h-full flex items-center justify-center max-h-[70vh]">
+          {item.isVideo ? (
+            <video key={item.url} src={item.url} autoPlay controls className="max-w-full max-h-full object-contain shadow-2xl rounded-md animate-in zoom-in-95 duration-300" />
+          ) : (
+            <img key={item.url} src={item.url} alt={item.title} className="max-w-full max-h-full object-contain shadow-2xl rounded-md animate-in zoom-in-95 duration-300" />
+          )}
+        </div>
+        
+        {/* Info */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
+          <div className="max-w-4xl mx-auto text-center animate-in slide-in-from-bottom-4 duration-500">
+            <span className="text-primary font-label-bold text-xs uppercase tracking-[0.2em] mb-2 block">{item.category}</span>
+            <h2 className="text-white text-2xl md:text-3xl font-light mb-3">{item.title}</h2>
+            <p className="text-white/70 text-sm md:text-base font-light tracking-wide max-w-2xl mx-auto">{item.description}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const categories: Category[] = ['All', 'Fences', 'Railings', 'Welding & Repair'];
+
 export default function Portfolio() {
   const location = useLocation();
-  const initialTab = location.state?.activeTab || 'fences';
-  const [activeTab, setActiveTab] = useState<'fences' | 'railings' | 'welding'>(initialTab);
+  const initialCategory = location.state?.activeTab 
+    ? (location.state.activeTab === 'fences' ? 'Fences' 
+       : location.state.activeTab === 'railings' ? 'Railings' 
+       : 'Welding & Repair')
+    : 'All';
+
+  const [activeCategory, setActiveCategory] = useState<Category>(initialCategory as Category);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (location.state?.activeTab) {
-      setActiveTab(location.state.activeTab);
+      const cat = location.state.activeTab === 'fences' ? 'Fences' 
+       : location.state.activeTab === 'railings' ? 'Railings' 
+       : 'Welding & Repair';
+      setActiveCategory(cat);
     }
   }, [location.state]);
 
-  const currentAlbums = activeTab === 'fences' 
-    ? fencesAlbums 
-    : activeTab === 'railings' 
-      ? railingsAlbums 
-      : weldingAlbums;
+  const filteredProjects = activeCategory === 'All' 
+    ? allProjects 
+    : allProjects.filter(p => p.category === activeCategory);
+
+  // Close lightbox when category changes
+  useEffect(() => setLightboxIndex(null), [activeCategory]);
 
   return (
     <main className="py-section-padding-desktop bg-background min-h-screen">
       <div className="max-w-container-max mx-auto px-gutter">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-in fade-in slide-in-from-bottom-8 duration-700">
           <h1 className="text-display-lg font-display-lg text-on-surface mb-4">Our <span className="text-primary">Portfolio</span></h1>
           <p className="text-body-lg font-body-lg text-on-surface-variant max-w-2xl mx-auto">
             Browse our completed projects. From high-security commercial chainlink to elegant residential custom aluminum railings, we deliver excellence on every job.
           </p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex justify-center gap-4 mb-16">
-          <button 
-            onClick={() => setActiveTab('fences')}
-            className={`px-8 py-3 font-label-bold text-label-bold uppercase tracking-widest border transition-all ${activeTab === 'fences' ? 'bg-primary text-on-primary border-primary' : 'bg-transparent text-on-surface border-outline-variant hover:border-primary/50'}`}
-          >
-            Fences
-          </button>
-          <button 
-            onClick={() => setActiveTab('railings')}
-            className={`px-8 py-3 font-label-bold text-label-bold uppercase tracking-widest border transition-all ${activeTab === 'railings' ? 'bg-primary text-on-primary border-primary' : 'bg-transparent text-on-surface border-outline-variant hover:border-primary/50'}`}
-          >
-            Railings
-          </button>
-          <button 
-            onClick={() => setActiveTab('welding')}
-            className={`px-8 py-3 font-label-bold text-label-bold uppercase tracking-widest border transition-all ${activeTab === 'welding' ? 'bg-primary text-on-primary border-primary' : 'bg-transparent text-on-surface border-outline-variant hover:border-primary/50'}`}
-          >
-            Welding & Repair
-          </button>
+        {/* Filters */}
+        <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-16 px-2">
+          {categories.map(cat => (
+            <button 
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-6 py-3 font-label-bold text-label-bold uppercase tracking-widest border transition-all duration-300 rounded-full ${activeCategory === cat ? 'bg-primary text-on-primary border-primary shadow-md' : 'bg-transparent text-on-surface border-outline-variant hover:border-primary/50 hover:bg-surface-container-highest'}`}
+            >
+              {cat}
+            </button>
+          ))}
         </div>
 
-        {/* Albums List */}
-        <div className="space-y-20">
-          {currentAlbums.map((album, albumIndex) => (
-            <section key={albumIndex} className="animate-in fade-in slide-in-from-bottom-8 duration-700">
-              <div className="mb-8 border-b border-outline-variant pb-4">
-                <h2 className="text-headline-md font-headline-md text-primary uppercase mb-2">{album.title}</h2>
-                <p className="text-body-lg text-on-surface-variant max-w-3xl">{album.description}</p>
-              </div>
-              
-              {/* Gallery Grid for this Album */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {album.images.map((img, imgIndex) => {
-                  const isVideo = img.endsWith('.mp4');
-                  return (
-                    <div key={imgIndex} className="group relative aspect-square bg-surface-container-high overflow-hidden border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
-                      {isVideo ? (
-                        <video 
-                          src={img} 
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          autoPlay muted loop playsInline
-                        />
-                      ) : (
-                        <img 
-                          src={img} 
-                          alt={`${album.title} portfolio item ${imgIndex + 1}`}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          loading="lazy"
-                        />
-                      )}
-                      <div className="absolute inset-0 bg-background/0 group-hover:bg-background/20 transition-colors duration-300"></div>
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
+        {/* Gallery Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          {filteredProjects.map((item, index) => (
+            <RevealCard 
+              key={`${item.id}-${activeCategory}`} 
+              item={item} 
+              index={index} 
+              onClick={() => setLightboxIndex(index)} 
+            />
           ))}
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <Lightbox 
+          items={filteredProjects} 
+          initialIndex={lightboxIndex} 
+          onClose={() => setLightboxIndex(null)} 
+        />
+      )}
     </main>
   );
 }
