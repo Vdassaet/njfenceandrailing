@@ -41,10 +41,20 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="max-w-container-max mx-auto px-gutter py-8 border-t border-outline-variant">
+      <div className="max-w-container-max mx-auto px-gutter py-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-label-bold font-body-md text-on-surface-variant text-center md:text-left">
           © {new Date().getFullYear()} NJ Fence and Railing. All rights reserved. Proudly serving New Jersey and surrounding areas.
         </p>
+        <a 
+          href="https://maps.app.goo.gl/euDHYjZhjARjbETq5" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors text-label-bold"
+          title="NJ Fence and Railing on Google Maps"
+        >
+          <span className="material-symbols-outlined text-[20px]">location_on</span>
+          <span>Find us on Google Maps</span>
+        </a>
       </div>
     </footer>
   );
