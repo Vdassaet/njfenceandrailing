@@ -2,11 +2,11 @@
   "specVersion": "1.0",
   "entries": [
     {
-      "identifier": "urn:ard:njfence:main:website",
+      "identifier": "urn:air:njnyfenceandrailing:main:website-summary",
       "displayName": "NJ Fence Information",
       "description": "Information about NJ Fence and Railing services.",
       "url": "https://njnyfenceandrailing.com/llms.txt",
-      "type": "text/markdown; profile=\"urn:a1:agent-skills\"",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
       "representativeQueries": [
         "fence company nj",
         "aluminum fence"
