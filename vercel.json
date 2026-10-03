@@ -1,14 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/ai-catalog.json",
-      "destination": "/404.html"
-    },
-    {
-      "source": "/.well-known/ai-catalog.json",
-      "destination": "/404.html"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
