@@ -46,7 +46,7 @@ export default function Contact() {
           <form action="https://formsubmit.co/njfenceandrailing@gmail.com" method="POST" className="space-y-6 flex flex-col justify-center">
             {/* Hidden fields for FormSubmit configuration */}
             <input type="hidden" name="_subject" value="New Contact Request from Website!" />
-            <input type="hidden" name="_next" value="https://njfenceandrailing.vercel.app/" />
+            <input type="hidden" name="_next" value="https://njnyfenceandrailing.com/" />
             <input type="hidden" name="_captcha" value="false" />
             
             <div>
@@ -70,3 +70,4 @@ export default function Contact() {
     </main>
   );
 }
+
