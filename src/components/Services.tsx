@@ -4,6 +4,22 @@ import { useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
 export default function Services() {
+  const videoRef = useRef<HTMLDivElement>(null);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setIsVideoVisible(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: '200px' });
+    
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
   const location = useLocation();
 
   useEffect(() => {
@@ -160,11 +176,17 @@ export default function Services() {
           <div className="grid md:grid-cols-1 gap-8">
             <div className="bg-surface-container-high border border-outline-variant overflow-hidden group flex flex-col md:flex-row">
               <div className="md:w-1/2 flex flex-col gap-1 overflow-hidden">
-                <video 
-                  className="w-full h-48 object-cover md:h-64 transition-transform duration-700 hover:scale-105" 
-                  autoPlay muted loop playsInline
-                  src="/videos/mobile_welding.mp4" 
-                />
+                <div ref={videoRef} className="w-full h-48 md:h-64">
+                  {isVideoVisible ? (
+                    <video 
+                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
+                      autoPlay muted loop playsInline
+                      src="/videos/mobile_welding.mp4" 
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-surface-variant animate-pulse"></div>
+                  )}
+                </div>
                 <div className="grid grid-cols-2 gap-1 h-32 md:h-48">
                   <img 
                     className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" 
@@ -197,3 +219,4 @@ export default function Services() {
     </>
   );
 }
+
