@@ -7,7 +7,7 @@ export default function Hero() {
         <img 
           className="w-full h-full object-cover opacity-80" 
           alt="Luxury estate with custom metal railings" 
-          src="/images/hero_background.png" 
+          src="/images/hero_background.webp" 
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent"></div>
       </div>
@@ -77,3 +77,4 @@ export default function Hero() {
     </section>
   );
 }
+
