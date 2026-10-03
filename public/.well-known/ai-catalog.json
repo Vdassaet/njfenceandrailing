@@ -2,22 +2,28 @@
   "specVersion": "1.0",
   "entries": [
     {
-      "id": "custom-railing",
-      "name": "Custom Railing",
+      "identifier": "custom-railing",
+      "displayName": "Custom Railing",
       "description": "Tailor-made railing solutions designed to match your property's style and safety requirements.",
-      "url": "https://njnyfenceandrailing.com/services#railings"
+      "url": "https://njnyfenceandrailing.com",
+      "type": "text/html",
+      "representativeQueries": ["custom railing contractors nj", "residential railing installation new jersey"]
     },
     {
-      "id": "aluminum-fence",
-      "name": "Aluminum Fence",
+      "identifier": "aluminum-fence",
+      "displayName": "Aluminum Fence",
       "description": "Durable, weather-resistant aluminum fencing installations for security and curb appeal.",
-      "url": "https://njnyfenceandrailing.com/services#fences"
+      "url": "https://njnyfenceandrailing.com",
+      "type": "text/html",
+      "representativeQueries": ["aluminum fence installers nj", "aluminum fencing contractors"]
     },
     {
-      "id": "repair-services",
-      "name": "Repair Services",
+      "identifier": "repair-services",
+      "displayName": "Repair Services",
       "description": "Expert maintenance, restoration, and repair of existing fences and railings.",
-      "url": "https://njnyfenceandrailing.com/services#repairs"
+      "url": "https://njnyfenceandrailing.com",
+      "type": "text/html",
+      "representativeQueries": ["fence repair services nj", "railing restoration contractors"]
     }
   ]
 }
