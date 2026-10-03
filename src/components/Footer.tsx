@@ -10,9 +10,16 @@ export default function Footer() {
           <div className="text-headline-md font-headline-md font-black text-primary uppercase mb-6">
             NJ Fence and Railing
           </div>
-          <p className="text-body-md font-body-md text-on-surface-variant mb-8">
+          <p className="text-body-md font-body-md text-on-surface-variant mb-6">
             Providing top-tier fencing and railing solutions for the most demanding residential and commercial projects across New Jersey.
           </p>
+          <div className="flex items-start gap-3 mb-8 text-on-surface-variant">
+            <span className="material-symbols-outlined text-[20px] shrink-0">location_on</span>
+            <a href="https://maps.app.goo.gl/LQWq6qD66SBFUw2c6" target="_blank" rel="noopener noreferrer" className="text-body-md font-body-md hover:text-primary transition-colors">
+              2 Brighton Ave Fl 3<br />
+              Passaic, NJ 07055
+            </a>
+          </div>
           <div className="flex gap-4">
             <a 
               className="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors text-on-surface-variant" 
