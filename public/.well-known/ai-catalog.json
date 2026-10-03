@@ -1,29 +1,23 @@
 {
-  "catalog_version": "1.0",
-  "provider": {
-    "name": "NJ Fence and Railing",
-    "description": "Providing top-tier fencing and railing solutions for the most demanding residential and commercial projects across New Jersey.",
-    "website": "https://njnyfenceandrailing.com",
-    "location": "2 Brighton Ave Fl 3, Passaic, NJ 07055, USA"
-  },
-  "items": [
+  "specVersion": "1.0",
+  "entries": [
     {
       "id": "custom-railing",
-      "title": "Custom Railing",
-      "type": "service",
-      "description": "Tailor-made railing solutions designed to match your property's style and safety requirements."
+      "name": "Custom Railing",
+      "description": "Tailor-made railing solutions designed to match your property's style and safety requirements.",
+      "url": "https://njnyfenceandrailing.com/services#railings"
     },
     {
       "id": "aluminum-fence",
-      "title": "Aluminum Fence",
-      "type": "service",
-      "description": "Durable, weather-resistant aluminum fencing installations for security and curb appeal."
+      "name": "Aluminum Fence",
+      "description": "Durable, weather-resistant aluminum fencing installations for security and curb appeal.",
+      "url": "https://njnyfenceandrailing.com/services#fences"
     },
     {
       "id": "repair-services",
-      "title": "Repair Services",
-      "type": "service",
-      "description": "Expert maintenance, restoration, and repair of existing fences and railings."
+      "name": "Repair Services",
+      "description": "Expert maintenance, restoration, and repair of existing fences and railings.",
+      "url": "https://njnyfenceandrailing.com/services#repairs"
     }
   ]
 }
